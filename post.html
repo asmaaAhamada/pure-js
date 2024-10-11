@@ -1,0 +1,286 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+    </head>
+<body>
+     <!-- nonlogged -->
+    
+
+     <div class="container">
+        <div class="d-flex justify-content-center">
+            <div class="col-9" id="post">
+    <nav class="navbar navbar-expand-lg bg-light shadow p-3 mb-5 bg-body rounded ">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="index.html">Tarmeez</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <!-- nonlogged -->
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">profile</a>
+              </li>
+              
+                </ul>
+              
+             
+            </ul>
+            <button id="log_button" type="button" data-bs-toggle="modal" data-bs-target="#login" class="btn btn-outline-success mx-2">login</button>
+            <button  id ="regester_button"type="button" data-bs-toggle="modal" data-bs-target="#regster" class="btn btn-outline-success">regster</button>
+
+
+
+            
+          </div>
+          <!-- nonlogged -->
+        
+          
+          <button onclick="logout()"  id ="logout_button"type="button" class="btn btn-outline-danger">logout</button>
+
+
+
+
+
+        </div>
+      </nav>
+    </div>
+</div>
+    </div>
+      <!-- nonlogged -->
+
+
+
+
+
+
+
+      <div>
+
+
+
+
+        <div class="modal fade" id="login" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">entr your information</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form>
+                  <div class="mb-3">
+                    <label for="recipient-name" class="col-form-label">username:</label>
+                    <input type="text" class="form-control" id="username">
+                  </div>
+                  <div class="mb-3">
+                    <label for="message-text" class="col-form-label">password:</label>
+                    <textarea class="form-control" id="password"></textarea>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cancel</button>
+                <button type="button"   onclick="login()" class="btn btn-primary">login</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+      
+
+
+
+
+
+
+
+
+        
+  <div class="modal fade" id="regster" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">regester anew user</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+
+          
+
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">username:</label>
+              <input type="text" class="form-control" id="username-reg">
+            </div>
+            <div class="mb-3">
+              <label for="message-text" class="col-form-label">password:</label>
+              <textarea class="form-control" id="password-reg"></textarea>
+            </div>
+
+
+
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">name:</label>
+              <input type="text" class="form-control" id="name-reg">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cancel</button>
+          <button type="button"   onclick="regster()" class="btn btn-primary">regester</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+      </div>
+
+      <div class="container " style="height: 1000px ;">
+        <div class="d-flex justify-content-center">
+            <div class="col-9" id="name">
+                <h1 >
+                <span ></span></h1>
+
+
+        
+<div>
+
+ 
+          </div>
+
+<!-- card.... -->
+
+
+
+
+</body>
+<script src="as.js"></script>
+<script>
+
+
+const url=new URLSearchParams(window.location.search)
+const params=url.get("postid")
+getpost()
+setuI()
+function getpost( ){
+
+
+
+axios.get(`https://tarmeezacademy.com/api/v1/posts/${params}`)
+.then(function (response) {
+  // handle success
+  console.log(response);
+  const post=response.data.data
+const comments=post.comments
+const author=post.author
+// document.getElementById("name").innerHTML=author.username
+let commentconntent=``
+for(comment of comments){
+  commentconntent+=`<div class="p-3" style="background-color: rgb(248, 248, 248)">
+  <div>
+  <img src="${comment.author.profile_image}" style="width: 40px; height: 40px" class="rounded-circle"/><b>${comment.author.username}</b></div>
+  <div> ${comment.body}</div>
+</div>`
+}
+const content=`
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <div  id ="d"class="card">
+        <div class="card-header">
+          <img src="src/ol;.jpg" style="width: 40px;height: 40x;" class="rounded-circle"/>
+          <b>${author.username}</b>
+        </div>
+        <div class="card-body shadow p-3 mb-5 bg-body rounded"  style="cursor:pointer;">
+
+          <img class="w-100" src="${post.image}"/>
+          <h6  class ="mt-1"style="color: gray;">${post.created_at}</h6>
+          <h4></h4>
+          <p>${post.body}</p>
+          <!-- 3coments -->
+           <hr>
+           <div>
+            <!-- pen// -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+                <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z"/>
+              </svg>
+            <span>
+            </span>
+           </div>
+           
+        </div>
+        <div id="comments">
+${commentconntent}
+      </div>
+      <div id="bodyofcomment" class="input-group mb-3"> 
+    <input  id="inputcomment" type="text" style="margin-bottom: 1;border: none;background-color: aliceblue;" class="form-control"  placeholder="add your comments here"/>
+    <button type="button" class="btn btn-outline-primary" onclick="writecomment()">send</button>
+  </div>
+        </div>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        `
+       
+        document.getElementById("post").innerHTML=content
+})
+    
+    
+
+}
+
+
+function writecomment(){
+  const usercomment=document.getElementById("inputcomment").value
+  
+  const token =localStorage.getItem("token")
+  const base='https://tarmeezacademy.com/api/v1'
+let url=`${base}/posts/${params}/comments`
+  const param={
+    "body":usercomment
+  }
+  
+  const header={
+        
+
+        "authorization":`Bearer ${token}`
+      }
+      axios.post(url,param,{headers:header}
+         
+  
+         )
+         .then(function (response) {
+          console.log(response.data)
+          getpost()
+         })
+
+
+
+}
+writecomment()
+</script>
+</html>

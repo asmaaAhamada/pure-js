@@ -1,0 +1,508 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<style>
+
+    body{
+        background-color: rgb(238, 236, 232);
+    }
+    .card{
+        margin-top: 30px;
+        
+    }
+    #add{
+/* مابيتحرك مهما طلعت  */
+position: fixed;
+
+bottom: 5%;
+right: 6%;
+font-size: 50px;
+color: azure;
+height: 70px;
+width: 70px;
+border-radius: 100%;
+text-align: center;
+cursor: pointer;
+box-shadow: 0px 3px 5px;
+
+    }
+
+ /* //////////////loder */ 
+
+
+
+
+
+ 
+.lds-ring,
+.lds-ring div {
+  box-sizing: border-box;
+}
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border: 8px solid currentColor;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: currentColor transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /* //////////////loder */
+
+    
+</style>
+<body>
+
+
+
+
+<!-- ///addloder -->
+<div  style="     position: fixed;display: flex;  justify-content: center;align-items: center;top: 0px;bottom: 0px;left: 0px;right: 0px;z-index: 9999;">
+<div class="lds-ring"><div></div><div></div><div></div><div></div></div></div>
+
+<!-- ////////////addloder ///////////-->
+
+
+
+
+
+
+
+<!-- ///add -->
+
+<div class="bg-primary" id="add" data-bs-toggle="modal" data-bs-target="#add-create">+
+
+
+
+
+</div>
+
+
+
+
+<!-- ///add///////////// -->
+
+<!-- model add -->
+<div>
+
+
+
+
+  <div class="modal fade" id="add-create" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">create new post</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">title:</label>
+              <input type="text" class="form-control" id="title">
+            </div>
+            <div class="mb-3">
+              
+              <textarea  class="form-control" id="body" style="width: 100%;height: 100%;border-color: blue;margin-bottom: 4%;">
+
+
+              </textarea>
+              
+            </div>
+
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">image:</label>
+              <input type="file" class="form-control" id="image">
+            </div>
+
+
+          </form>
+        </div>
+        <div class="modal-footer" >
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cancel</button>
+          <button type="button"   onclick="create_post()" class="btn btn-primary">creat</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+<!-- model add -->
+
+
+
+<!-- model login -->
+<div>
+
+
+
+
+  <div class="modal fade" id="login" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">entr your information</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">username:</label>
+              <input type="text" class="form-control" id="username">
+            </div>
+            <div class="mb-3">
+              <label for="message-text" class="col-form-label">password:</label>
+              <textarea class="form-control" id="password"></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cancel</button>
+          <button type="button"   onclick="login()" class="btn btn-primary">login</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+<!--login model -->
+
+
+<div>
+
+
+<!-- model regster -->
+
+  <div class="modal fade" id="regster" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">regester anew user</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+
+          
+
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">username:</label>
+              <input type="text" class="form-control" id="username-reg">
+            </div>
+            <div class="mb-3">
+              <label for="message-text" class="col-form-label">password:</label>
+              <textarea class="form-control" id="password-reg"></textarea>
+            </div>
+
+
+
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">name:</label>
+              <input type="text" class="form-control" id="name-reg">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cancel</button>
+          <button type="button"   onclick="regster()" class="btn btn-primary">regester</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+</div>
+
+<!-- model regester -->
+
+
+
+
+
+
+    <div class="container">
+        <div class="d-flex justify-content-center">
+            <div class="col-9">
+    <nav class="navbar navbar-expand-lg bg-light shadow p-3 mb-5 bg-body rounded ">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="index.html">home</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <!-- nonlogged -->
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+              </li>
+             
+             
+            </ul>
+            <button id="log_button" type="button" data-bs-toggle="modal" data-bs-target="#login" class="btn btn-outline-success mx-2">login</button>
+            <button  id ="regester_button"type="button" data-bs-toggle="modal" data-bs-target="#regster" class="btn btn-outline-success">regster</button>
+
+
+
+            
+          </div>
+          <!-- nonlogged -->
+        
+          
+          <button onclick="logout()"  id ="logout_button"type="button" class="btn btn-outline-danger">logout</button>
+
+
+
+
+
+        </div>
+      </nav>
+    </div>
+</div>
+    </div>
+<!-- //alert -->
+
+<div  class ="alert"id="alert"></div>
+
+<!-- //alert -->
+
+
+<!-- Content here -->
+    <div class="container " style="height: 1000px ;">
+        <div class="d-flex justify-content-center">
+            <div class="col-9">
+
+
+        <!-- //posts -->
+<div>
+
+
+
+
+<!-- card.... -->
+    <div  id ="d"class="card">
+        <div class="card-header">
+          <img src="src/ol;.jpg" style="width: 40px;height: 40x;" class="rounded-circle"/>
+          <b>@asmaa</b>
+        </div>
+        <div class="card-body shadow p-3 mb-5 bg-body rounded">
+
+          <img class="w-100" src="src/as.jpeg"/>
+          <h6  class ="mt-1"style="color: gray;">2mintsago</h6>
+          <h4>hello</h4>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error blanditiis accusantium dolorem in commodi libero neque consectetur obcaecati, incidunt tenetur illum sunt corrupti rerum animi est. Dolore suscipit minima molestiae.</p>
+          <!-- 3coments -->
+           <hr>
+           <div>
+            <!-- pen// -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+                <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z"/>
+              </svg>
+            <span>(3)comments</span>
+           </div>
+        </div>
+      </div>
+<!-- card.... -->
+
+
+
+<!-- card.... -->
+<div class="card">
+    <div class="card-header">
+      <img src="src/ol;.jpg" style="width: 40px;height: 40x;" class="rounded-circle"/>
+      <b>@asmaa</b>
+    </div>
+    <div class="card-body shadow p-3 mb-5 bg-body rounded">
+
+      <img class="w-100" src="src/as.jpeg"/>
+      <h6  class ="mt-1"style="color: gray;">2mintsago</h6>
+      <n4>hello</n4>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error blanditiis accusantium dolorem in commodi libero neque consectetur obcaecati, incidunt tenetur illum sunt corrupti rerum animi est. Dolore suscipit minima molestiae.</p>
+      <!-- 3coments -->
+       <hr>
+       <div>
+        <!-- pen// -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+            <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z"/>
+          </svg>
+        <span>(3)comments</span>
+       </div>
+    </div>
+  </div>
+<!-- card.... -->
+
+
+
+
+
+<!-- card.... -->
+<div class="card">
+    <div class="card-header">
+      <img src="src/ol;.jpg" style="width: 40px;height: 40x;" class="rounded-circle"/>
+      <b>@asmaa</b>
+    </div>
+    <div class="card-body shadow p-3 mb-5 bg-body rounded">
+
+      <img class="w-100" src="src/as.jpeg"/>
+      <h6  class ="mt-1"style="color: gray;">2mintsago</h6>
+      <n4>hello</n4>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error blanditiis accusantium dolorem in commodi libero neque consectetur obcaecati, incidunt tenetur illum sunt corrupti rerum animi est. Dolore suscipit minima molestiae.</p>
+      <!-- 3coments -->
+       <hr>
+       <div>
+        <!-- pen// -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+            <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z"/>
+          </svg>
+        <span>(3)comments</span>
+       </div>
+    </div>
+  </div>
+<!-- card.... -->
+ 
+<!-- card.... -->
+<div class="card">
+    <div class="card-header">
+      <img src="src/ol;.jpg" style="width: 40px;height: 40x;" class="rounded-circle"/>
+      <b>@asmaa</b>
+    </div>
+    <div class="card-body shadow p-3 mb-5 bg-body rounded">
+
+      <img class="w-100" src="src/as.jpeg"/>
+      <h6  class ="mt-1"style="color: gray;">2mintsago</h6>
+      <n4>hello</n4>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error blanditiis accusantium dolorem in commodi libero neque consectetur obcaecati, incidunt tenetur illum sunt corrupti rerum animi est. Dolore suscipit minima molestiae.</p>
+      <!-- 3coments -->
+       <hr>
+       <div>
+        <!-- pen// -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+            <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z"/>
+          </svg>
+        <span>(3)comments</span>
+       </div>
+    </div>
+  </div>
+<!-- card.... -->
+ 
+<!-- card.... -->
+<div class="card">
+    <div class="card-header">
+      <img src="src/ol;.jpg" style="width: 40px;height: 40x;" class="rounded-circle"/>
+      <b>@asmaa</b>
+    </div>
+    <div class="card-body shadow p-3 mb-5 bg-body rounded">
+
+      <img class="w-100" src="src/as.jpeg"/>
+      <h6  class ="mt-1"style="color: gray;">2mintsago</h6>
+      <n4>hello</n4>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error blanditiis accusantium dolorem in commodi libero neque consectetur obcaecati, incidunt tenetur illum sunt corrupti rerum animi est. Dolore suscipit minima molestiae.</p>
+      <!-- 3coments -->
+       <hr>
+       <div>
+        <!-- pen// -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+            <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z"/>
+          </svg>
+        <span>(3)comments</span>
+       </div>
+    </div>
+  </div>
+<!-- card.... -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+      </div>  
+      </div>
+      </div>
+
+</body>
+<script src="as.js"></script>
+</html>
